@@ -86,6 +86,15 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: 'beanza beanza beanza beanza',
+    date: 'Jan 1st, 1969',
+    firstParagraph: `beanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanza`,
+
+    secondParagraph: `beanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanza`,
+
+    thirdParagraph: `beanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanzabeanza beanza beanza beanza`
   }
 ];
 
@@ -106,7 +115,7 @@ const data = [
   </div>
 */
 
-function articleMaker(article) {
+function articleMaker({title, date, firstParagraph, secondParagraph, thirdParagraph}) {
 
 const articleid = document.createElement('div')
 const articleTitle = document.createElement('h2')
@@ -114,30 +123,36 @@ const articleDate = document.createElement('p')
 const articleP1 = document.createElement('p')
 const articleP2 = document.createElement('p')
 const articleP3 = document.createElement('p')
-const expandBut = document.createElement('span')
+const span = document.createElement('span');
 
-articleTitle.appendChild(articleid);
-articleDate.appendChild(articleTitle);
-articleP1.appendChild(articleDate);
-articleP2.appendChild(articleP1);
-articleP3.appendChild(articleP2);
+articleid.appendChild(articleTitle);
+articleid.appendChild(articleDate);
+articleid.appendChild(articleP1);
+articleid.appendChild(articleP2);
+articleid.appendChild(articleP3);
+articleid.appendChild(span);
 
-articleid.classList.add('article-id');
-articleTitle.classList.add('article-title');
-articleDate.classList.add('class-date');
-articleP1.classList.add('articleP1');
-articleP2.classList.add('articleP2');
-articleP3.classList.add('articleP3');
-
+articleid.classList.add('article');
 articleTitle.textContent = title;
+articleDate.classList.add('date');
 articleDate.textContent = date;
 articleP1.textContent = firstParagraph;
 articleP2.textContent = secondParagraph;
 articleP3.textContent = thirdParagraph;
+span.classList.add('expandButton')
+span.textContent = '^';
+span.addEventListener('click', function (event) {
+  articleid.classList.toggle('article-open');
+})
 
-return articleid
+return articleid;
 }
-console.log(articleMaker(data[1]))
+
+data.forEach(i => {
+  const newArticle = articleMaker(i);
+  document.querySelector('.articles').appendChild(newArticle);
+})
+
   // Step 2: Still inside `articleMaker`, add an event listener to the span.expandButton.
   // This listener should toggle the class 'article-open' on div.article.
 
@@ -145,6 +160,8 @@ console.log(articleMaker(data[1]))
 
   // Step 4: Outside your function now, loop over the data. At each iteration you'll use your component
   // to create a div.article element and append it to the DOM inside div.articles (see index.html).
+
+
 
   // Step 5: Try adding new article object to the data array. Make sure it is in the same format as the others.
   // Refresh the page to see the new article.
